@@ -1,10 +1,12 @@
 package com.comercio.sa.cliente.cad.entity;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-import java.sql.Date;
+
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "cliente")
@@ -12,9 +14,9 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-    @Column(nullable = false)
+    @Column(length = 255, nullable = false)
     String nome;
-    @Column(nullable = false, unique = true)
+    @Column(length = 14, nullable = false, unique = true)
     String cpf;
     @Column
     @Temporal(TemporalType.DATE)
@@ -22,6 +24,9 @@ public class Cliente {
     LocalDate data_nascimento;
     @Column
     String endereco;
+    @OneToMany(mappedBy = "cliente", orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Contato> contatos;
 
     // Construtor padrão para o Hibernate
     public Cliente() {

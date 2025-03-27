@@ -2,32 +2,22 @@ package com.comercio.sa.cliente.cad.service;
 
 import com.comercio.sa.cliente.cad.entity.Cliente;
 import com.comercio.sa.cliente.cad.repository.ClienteRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import org.apache.catalina.User;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
 public class ClienteService {
+
     @Autowired
     private ClienteRepository clienteRep;
 
 
     public Cliente createCliente(Cliente cliente){
         try{
-            if (cliente.getNome() == null){
-                throw new RuntimeException("Nome do cliente não deve ser vazio");
-            }
-            if(cliente.getCpf() == null){
-                throw new RuntimeException("CPF do cliente não deve ser vazio");
-            }
+            validarDados(cliente);
             return clienteRep.save(cliente);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -80,20 +70,42 @@ public class ClienteService {
     }
 
     private void validarDados(Cliente newCliente){
+        // Validação do nome
         if(newCliente.getNome() == null || newCliente.getNome().isEmpty()){
             throw new RuntimeException("Nome do cliente não pode ser vazio");
         }
-        if(newCliente.getCpf() == null || newCliente.getCpf().isEmpty()){
+
+        // Valida se o CPF não é nulo ou vazio
+        var cpf = newCliente.getCpf();
+        if(cpf == null || cpf.isEmpty()){
             throw new RuntimeException("CPF do cliente não pode ser vazio");
         }
+        // Formata o CPF para o formato padrão
+        newCliente.setCpf(formatarCpf(cpf));
+
         try{
             LocalDate.parse(newCliente.getData_nascimento().toString(), DateTimeFormatter.ISO_LOCAL_DATE);
+            if(!newCliente.getData_nascimento().isBefore(LocalDate.now())){
+                throw new RuntimeException("Uma data futura não pode ser utilizada");
+            };
         } catch (Exception e) {
-            throw new RuntimeException("Data de nascimento inválida");
+            throw new RuntimeException("Data de nascimento inválida. Utilize o formato AAAA-MM-DD" + e.getMessage());
         }
     }
+
+    private String formatarCpf(String cpf){
+        cpf = cpf.replaceAll("[^0-9]", "");
+
+        // Verifica se tem exatamente 11 dígitos
+        if (!cpf.matches("\\d{11}")) {
+            throw new RuntimeException("CPF inválido. Deve conter exatamente 11 dígitos.");
+        }
+        return cpf.replaceAll("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");
+    }
+
     private Cliente atualizarCliente(Cliente cliente, Cliente newCliente){
         cliente.setNome(newCliente.getNome());
+        cliente.setCpf(formatarCpf(newCliente.getCpf()));
         cliente.setCpf(newCliente.getCpf());
         cliente.setData_nascimento(newCliente.getData_nascimento());
         cliente.setEndereco(newCliente.getEndereco());

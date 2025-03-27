@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/client")
+@RequestMapping("/cliente")
 public class ClienteController {
 
     // SpringBoot faz a injeção de dependência da classe ClientService
@@ -18,7 +18,7 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @GetMapping
-    public ResponseEntity<List<Cliente>> listClients(){
+    public ResponseEntity<List<Cliente>> listClientes(){
         var clientes = clienteService.getCliente();
         return ResponseEntity.ok(clientes);
     }
@@ -28,14 +28,14 @@ public class ClienteController {
         return ResponseEntity.ok(clienteService.createCliente(cliente));
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<Cliente> updateClienteById(@PathVariable("userId") String id,
+    @PutMapping("/{id}")
+    public ResponseEntity<Cliente> updateClienteById(@PathVariable("id") String id,
                                                      @RequestBody Cliente cliente){
         return ResponseEntity.ok(clienteService.updateClienteById(id, cliente));
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<String> deleteCliente(@PathVariable("userId") String id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCliente(@PathVariable("id") String id){
         return ResponseEntity.ok(clienteService.deleteCliente(id));
     }
 
