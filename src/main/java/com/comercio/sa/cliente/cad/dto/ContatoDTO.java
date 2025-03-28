@@ -1,4 +1,4 @@
-package com.comercio.sa.cliente.cad;
+package com.comercio.sa.cliente.cad.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,6 +9,24 @@ public class ContatoDTO {
     String tipo_contato;
     String valor;
     String observacao;
+    String nome_cliente;
+
+    public ContatoDTO(Integer id, Integer cliente_id, String tipo_contato, String valor, String observacao, String nome_cliente) {
+        this.id = id;
+        this.cliente_id = cliente_id;
+        this.tipo_contato = tipo_contato;
+        this.valor = valor;
+        this.observacao = observacao;
+        this.nome_cliente = nome_cliente;
+    }
+
+    public String getNome_cliente() {
+        return nome_cliente;
+    }
+
+    public void setNome_cliente(String nome_cliente) {
+        this.nome_cliente = nome_cliente;
+    }
 
     public Integer getId() {
         return id;

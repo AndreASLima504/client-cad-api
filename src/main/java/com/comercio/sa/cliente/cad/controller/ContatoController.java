@@ -1,16 +1,16 @@
 package com.comercio.sa.cliente.cad.controller;
 
-import com.comercio.sa.cliente.cad.ContatoDTO;
+import com.comercio.sa.cliente.cad.dto.ContatoDTO;
 import com.comercio.sa.cliente.cad.entity.Contato;
 import com.comercio.sa.cliente.cad.service.ContatoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
+@CrossOrigin
 @RequestMapping("/contato")
 public class ContatoController {
     @Autowired

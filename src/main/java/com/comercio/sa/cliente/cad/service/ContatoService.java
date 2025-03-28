@@ -1,14 +1,12 @@
 package com.comercio.sa.cliente.cad.service;
 
-import com.comercio.sa.cliente.cad.ContatoDTO;
-import com.comercio.sa.cliente.cad.entity.Cliente;
+import com.comercio.sa.cliente.cad.dto.ContatoDTO;
 import com.comercio.sa.cliente.cad.entity.Contato;
 import com.comercio.sa.cliente.cad.repository.ClienteRepository;
 import com.comercio.sa.cliente.cad.repository.ContatoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service

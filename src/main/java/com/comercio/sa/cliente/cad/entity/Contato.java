@@ -26,10 +26,10 @@ public class Contato {
     Cliente cliente;
 
     @JsonProperty("tipo_contato")
-    @Column(name = "tipo_contato", length = 50)
+    @Column(name = "tipo_contato", length = 50, nullable = false)
     String tipoContato;
 
-    @Column(name = "valor", length = 50)
+    @Column(name = "valor", length = 50, nullable = false)
     String valor;
 
     @Column(name = "observacao")

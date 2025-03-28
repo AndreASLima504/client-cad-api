@@ -86,7 +86,7 @@ public class ClienteService {
         try{
             LocalDate.parse(newCliente.getData_nascimento().toString(), DateTimeFormatter.ISO_LOCAL_DATE);
             if(!newCliente.getData_nascimento().isBefore(LocalDate.now())){
-                throw new RuntimeException("Uma data futura não pode ser utilizada");
+                throw new RuntimeException(" Uma data futura não pode ser utilizada");
             };
         } catch (Exception e) {
             throw new RuntimeException("Data de nascimento inválida. Utilize o formato AAAA-MM-DD" + e.getMessage());
