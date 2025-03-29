@@ -1,4 +1,4 @@
-DROP TABLE cliente;
+DROP DATABASE AGENDA;
 CREATE DATABASE AGENDA;
 USE AGENDA;
 # Tabelas de referência
@@ -10,15 +10,16 @@ CREATE TABLE cliente(
     endereco VARCHAR(100)
     );
 CREATE TABLE contato(
-	id INT PRIMARY KEY,
+	id INT PRIMARY KEY auto_increment,
     cliente_id INT,
     tipo_contato VARCHAR(50),
     valor VARCHAR(100),
     observacao VARCHAR(255),
-    FOREIGN KEY (cliente_id) REFERENCES cliente(id)
+    FOREIGN KEY (cliente_id) REFERENCES cliente(id) ON DELETE CASCADE
 );
 
-# Execute daqui para a frente para inserir novos dados
+##### Execute daqui para a frente para inserir novos dados
+USE AGENDA;
 INSERT INTO cliente(nome, cpf, data_nascimento, endereco)
 VALUES ('Fulano', '123.456.789-01', '2000-01-01', 'Rua dos fundos'),
 ('Ciclano', '223.456.789-01', '1999-01-04', 'Rua da frente'),

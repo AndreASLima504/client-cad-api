@@ -24,7 +24,7 @@ public class Cliente {
     LocalDate data_nascimento;
     @Column
     String endereco;
-    @OneToMany(mappedBy = "cliente", orphanRemoval = true)
+    @OneToMany(mappedBy = "cliente", orphanRemoval = true, cascade = CascadeType.REMOVE)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Contato> contatos;
 

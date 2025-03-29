@@ -2,6 +2,7 @@ package com.comercio.sa.cliente.cad.service;
 
 import com.comercio.sa.cliente.cad.entity.Cliente;
 import com.comercio.sa.cliente.cad.repository.ClienteRepository;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -20,6 +21,9 @@ public class ClienteService {
             validarDados(cliente);
             return clienteRep.save(cliente);
         } catch (Exception e) {
+            if (e.getMessage().contains("Duplicate entry")){
+                throw new RuntimeException("CPF duplicado!");
+            }
             throw new RuntimeException(e);
         }
     }
@@ -48,6 +52,9 @@ public class ClienteService {
 
                 return clienteRep.save(cliente);
         } catch (Exception e) {
+            if (e.getMessage().contains("Duplicate entry")){
+                throw new RuntimeException("CPF duplicado!");
+            }
             throw new RuntimeException(e);
         }
     }
